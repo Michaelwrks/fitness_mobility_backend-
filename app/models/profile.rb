@@ -3,8 +3,12 @@ class Profile < ApplicationRecord
     
     inclusion:{
         in: %w[beginner medium high],
-        message: "%{value}Invalid mobility level"
+        message: "%{value} Invalid mobility level"
     }
     validates :goals, presence:true 
+
+    belongs_to :user
+
+    has_many :tutorials, dependent: :destroy
 
 end

@@ -5,4 +5,6 @@ class Tutorial < ApplicationRecord
         in: %w[mp4 mov avi],
         message: "%{value}must be one of mp4, mov, avi"
     }
+
+    belongs_to :profile
 end
