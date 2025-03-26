@@ -12,6 +12,8 @@
 # the additional setup, and require it from the spec files that actually need
 # it.
 #
+require 'factory_bot_rails'
+
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -46,6 +48,12 @@ RSpec.configure do |config|
 
   RSpec.configure do |config|
     config.include FactoryBot::Syntax::Methods
+  end
+  
+  RSpec.configure do |config|
+    config.before(:suite) do
+      puts Rails.application.routes.routes.map { |r| r.path.spec.to_s }.sort
+    end
   end
   
 # The settings below are suggested to provide a good initial experience
