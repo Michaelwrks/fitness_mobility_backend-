@@ -45,3 +45,4 @@ end
 group :development, :test do
   gem 'factory_bot_rails'
 end
+gem "jsonapi-serializer", "~> 2.2"
