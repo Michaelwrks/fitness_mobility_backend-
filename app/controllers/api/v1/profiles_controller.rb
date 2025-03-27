@@ -3,18 +3,18 @@ class Api::V1::ProfilesController < ApplicationController
 
     def index
       @profiles = Profile.all
-      render json: @profiles
+      render json: ProfileSerializer.new(@profiles, include: [:tutorials]).serializable_hash.to_json
     end
 
     def show
-      render json: @profile
+      render json: ProfileSerializer.new(@profile include: [:tutorials]).serializable_hash.to_json
     end
 
     def create
         @profile = Profile.new(profile_params)
   
         if @profile.save
-          render json: @profile, status: :created
+          render json: ProfileSerializer.new(@profile include: [:tutorials]).serializable_hash.to_json
         else
           render json: @profile.errors, status: :unprocessable_entity
         end
@@ -22,7 +22,7 @@ class Api::V1::ProfilesController < ApplicationController
   
       def update
         if @profile.update(profile_params)
-          render json: @profile
+          render json: ProfileSerializer.new(@profile include: [:tutorials]).serializable_hash.to_json
         else
           render json: @profile.errors, status: :unprocessable_entity
         end
@@ -36,13 +36,12 @@ class Api::V1::ProfilesController < ApplicationController
       private
   
       def set_profile
-        @profile = Profile.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
-        render json: {error: 'profile not found'}, status: :not_found
+        @profile = Profile.includes(:tutorial).find_by(id: params[:id])
+        render json: {error: 'profile not found'}, status: :not_found unless @profile
       end
   
       def profile_params
-        params.require(:profile).permit(:mobility_level, :goals)
+        params.require(:profile).permit(:mobility_level, :goals, :user_id, tutorials_ids: [])
       end
 
 end
