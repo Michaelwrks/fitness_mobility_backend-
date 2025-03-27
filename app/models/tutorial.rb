@@ -1,4 +1,7 @@
 class Tutorial < ApplicationRecord
+
+    before_validation :normalize_format 
+
     validates :name, presence: true
     validates :category, presence: true
     validates :format, presence: true, inclusion:{
@@ -6,5 +9,12 @@ class Tutorial < ApplicationRecord
         message: "%{value}must be one of mp4, mov, avi"
     }
 
-    belongs_to :profile
+    has_many :profile_tutorials, dependent: :destroy
+    has_many :profiles, through: :profile_tutorials
+
+    private
+
+    def normalize_format
+        self.format = format.downcase.strip if format.present?
+    end
 end
