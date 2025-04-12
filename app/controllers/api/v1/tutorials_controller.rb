@@ -3,7 +3,7 @@ class Api::V1::TutorialsController < ApplicationController
 
     def index
       @tutorials = Tutorial.all
-      render json: TutorialSerializer.new(tutorials).serializable_hash.to_json
+      render json: TutorialSerializer.new(@tutorials).serializable_hash.to_json
     end
 
     def show

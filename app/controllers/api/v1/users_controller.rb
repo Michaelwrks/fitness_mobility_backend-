@@ -3,12 +3,12 @@ class Api::V1::UsersController < ApplicationController
 
     def index
       @users = User.all
-      render json: UserSerializer.new(@users).serializable_hash.to_json
+      render json: UserSerializer.new(@users, include: [:profile]).serializable_hash.to_json
     end
 
     def show
       if @user
-        render json: UserSerializer.new(@user).serializable_hash.to_json
+        render json: UserSerializer.new(@user, include: [:profile]).serializable_hash.to_json
       else
         render json: { error: "User not found" }, status: :not_found
       end
@@ -19,7 +19,7 @@ class Api::V1::UsersController < ApplicationController
         @user = User.new(user_params)
   
         if @user.save
-          render json: UserSerializer.new(@user).serializable_hash.to_json, status: :created
+          render json: UserSerializer.new(@user, include: [:profile]).serializable_hash.to_json, status: :created
         else
           render json: @user.errors, status: :unprocessable_entity
         end
@@ -28,7 +28,7 @@ class Api::V1::UsersController < ApplicationController
   
       def update
         if @user.update(user_params)
-          render json: UserSerializer.new(@user).serializable_hash.to_json, status: :ok
+          render json: UserSerializer.new(@user, include: [:profile]).serializable_hash.to_json, status: :ok
         else
           render json: @user.errors, status: :unprocessable_entity
         end

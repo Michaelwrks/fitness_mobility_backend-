@@ -7,14 +7,14 @@ class Api::V1::ProfilesController < ApplicationController
     end
 
     def show
-      render json: ProfileSerializer.new(@profile include: [:tutorials]).serializable_hash.to_json
+      render json: ProfileSerializer.new(@profile, include: [:tutorials]).serializable_hash.to_json
     end
 
     def create
         @profile = Profile.new(profile_params)
   
         if @profile.save
-          render json: ProfileSerializer.new(@profile include: [:tutorials]).serializable_hash.to_json
+          render json: ProfileSerializer.new(@profile, include: [:tutorials]).serializable_hash.to_json
         else
           render json: @profile.errors, status: :unprocessable_entity
         end
@@ -22,7 +22,7 @@ class Api::V1::ProfilesController < ApplicationController
   
       def update
         if @profile.update(profile_params)
-          render json: ProfileSerializer.new(@profile include: [:tutorials]).serializable_hash.to_json
+          render json: ProfileSerializer.new(@profile, include: [:tutorials]).serializable_hash.to_json
         else
           render json: @profile.errors, status: :unprocessable_entity
         end
