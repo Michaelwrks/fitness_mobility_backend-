@@ -2,7 +2,6 @@
 class TutorialSerializer
     include JSONAPI::Serializer
     attributes :name, :category, :format
-    has_many :profile_tutorials
-    has_many :profiles, through: :profile_tutorials  
+    has_one :profile, dependent: :destroy
   end
   
