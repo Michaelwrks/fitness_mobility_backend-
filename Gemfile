@@ -38,6 +38,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "devise", "~> 4.9"
+# Gemfile
+gem 'simple_token_authentication', '~> 1.18', '>= 1.18.1'
 
 group :development, :test do
   gem 'rspec-rails'

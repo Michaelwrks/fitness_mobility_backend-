@@ -1,12 +1,17 @@
 class Api::V1::UsersController < ApplicationController
-    before_action :set_user, only: [:show, :update, :destroy]
+  
+  include Devise::Controllers::Helpers
+  
+  before_action :set_user, only: [:show, :update, :destroy]
 
     def index
+     
       @users = User.all
       render json: UserSerializer.new(@users, include: [:profile]).serializable_hash.to_json
     end
 
     def show
+      
       if @user
         render json: UserSerializer.new(@user, include: [:profile]).serializable_hash.to_json
       else

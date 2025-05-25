@@ -1,4 +1,11 @@
 class User < ApplicationRecord
+  acts_as_token_authenticatable
+  
+  before_save :check_auth_token
+  
+  def check_auth_token
+    puts "Before Save: #{authentication_token}"
+  end
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
