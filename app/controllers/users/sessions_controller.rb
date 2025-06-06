@@ -19,7 +19,7 @@ class Users::SessionsController < Devise::SessionsController
 
     if user&.valid_password?(params[:password])
       sign_in(user)
-      render json: { message: "Logged in successfully", user: user.as_json(only: [:id, :email]) }, status: :ok
+      render json: { message: "Logged in successfully", user: user.as_json(only: [:id, :email, :authentication_token]) }, status: :ok
     else
       render json: { error: "Invalid email or password" }, status: :unauthorized
     end

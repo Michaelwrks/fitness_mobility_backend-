@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
     
     acts_as_token_authentication_handler_for User, fallback: :none
     
-    before_action :authenticate_user, except: [:create, :index]
+    before_action :authenticate_user, except: [:new, :create, :index]
 
 
     def current_user
