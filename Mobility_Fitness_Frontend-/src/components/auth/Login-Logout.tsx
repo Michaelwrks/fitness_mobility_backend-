@@ -4,13 +4,17 @@ import React, {
 	HtmlHTMLAttributes,
 	ButtonHTMLAttributes,
 } from "react";
+
+
 // import { UsersList } from "../UsersList";
 import { API_URL } from "../../constants";
 import { notEqual } from "assert";
 
-function UserLogin({ CiUser, TbLockPassword, formHandle }) {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+
+
+
+function UserLogin({ CiUser, TbLockPassword, formHandle, email, setEmail, password, setPassword }) {
+
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	const validate = () => {
@@ -128,6 +132,8 @@ function UserLogin({ CiUser, TbLockPassword, formHandle }) {
 				<p onClick={() => formHandle("register")}>Dont have an account? Sign up</p>
 			</form>
 			<p>{email}</p>
+
+
 		</div>
 	);
 }

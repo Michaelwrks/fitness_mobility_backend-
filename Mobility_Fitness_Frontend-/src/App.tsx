@@ -5,11 +5,17 @@ import "./App.css";
 import { CiUser } from "react-icons/ci";
 import { TbLockPassword } from "react-icons/tb";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
-import UserSignUp from "./components/auth/Register";
-import "./index.css"
+import "./index.css";
+import userSignup from "./components/auth/Register";
+import UserRegister from "./components/auth/Register";
 
 function App() {
 	const [isNewUser, setIsNewUser] = useState("login");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [newUserEmail, setNewUserEmail] = useState("");
+	const [newUserPassword, setNewUserPassword] = useState("");
+	const [confirmNewUserPassword, setConfirmNewUserPassword] = useState("");
 
 	return (
 		<>
@@ -20,14 +26,24 @@ function App() {
 					CiUser={CiUser}
 					TbLockPassword={TbLockPassword}
 					formHandle={setIsNewUser}
+					email={email}
+					setEmail={setEmail}
+					password={password}
+					setPassword={setPassword}
 				/>
 			) : (
-				<UserSignUp
+				<UserRegister
 					CiUser={CiUser}
 					TbLockPassword={TbLockPassword}
 					MdOutlineDriveFileRenameOutline={MdOutlineDriveFileRenameOutline}
 					formHandle={setIsNewUser}
-				/>	
+					newUserEmail={newUserEmail}
+					setNewUserEmail={setNewUserEmail}
+					newUserPassword={newUserPassword}
+					setNewUserPassword={setNewUserPassword}
+					confirmNewUserPassword={confirmNewUserPassword}
+					setConfirmNewUserPassword={setConfirmNewUserPassword}
+				/>
 			)}
 
 			{/* <UsersList /> */}
