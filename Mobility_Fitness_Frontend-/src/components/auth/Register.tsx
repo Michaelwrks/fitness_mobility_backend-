@@ -16,6 +16,81 @@ function UserRegister({
 	confirmNewUserPassword,
 	setConfirmNewUserPassword,
 }) {
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [newUserAge, setNewUserAge] = useState("");
+
+	const validate = () => {
+		let result = true;
+		if (
+			newUserEmail === "" ||
+			newUserEmail === null ||
+			!newUserEmail.includes("@")
+		) {
+			result = false;
+			alert("Please enter a valid email");
+		}
+		if (
+			newUserPassword === "" ||
+			newUserPassword === null ||
+			newUserPassword.length < 6
+		) {
+			result = false;
+			alert("Please enter a valid password");
+		}
+		if (newUserPassword !== confirmNewUserPassword) {
+			result = false;
+			alert("Passwords do not match");
+		}
+		return result;
+	};
+
+	const fullName = firstName + " " + lastName;
+
+	const railsAttributes = {
+		name: fullName,
+		email: newUserEmail,
+		age: newUserAge,
+		password: newUserPassword,
+		password_confirmation: confirmNewUserPassword,
+	};
+
+	const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		if (validate()) {
+			try {
+				const response = await fetch(`${API_URL}/sign_up`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						user: railsAttributes,
+					}),
+				});
+
+				if (response.ok) {
+					const data = await response.json();
+					console.log("signup successful", data);
+
+					const token = data.user.authentication_token;
+
+					console.log(token);
+
+					localStorage.setItem("user-token", token);
+					// setIsLoggedIn(true);
+				} else {
+					const errorData = await response.json();
+					console.error("Signup failed:", errorData);
+					alert("Signup failed. Please check your details and try again.");
+				}
+			} catch (err) {
+				console.error("Error:", err);
+			}
+		}
+	};
+
 	return (
 		<div className="form-container">
 			<h2>Register</h2>

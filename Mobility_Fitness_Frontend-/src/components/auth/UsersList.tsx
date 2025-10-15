@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { API_URL } from "../constants";
+import { API_URL } from "../../constants";
 
 function UsersList() {
 	const [users, setUsers] = useState<User[]>([]);
